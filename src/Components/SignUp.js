@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
@@ -6,32 +6,41 @@ import "./SignUp.css";
 export const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [passWord, setPassWord] = useState("");
+  const [password, setpassword] = useState("");
   const [userInfo, setUserInfo] = useState([]);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("userInfo");
+    if (storedUser) {
+      setUserInfo(JSON.parse(storedUser));
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === "" || passWord === "" || name === "") {
-      alert("Please fill the neccessary Information!");
+    if (email === "" || password === "" || name === "") {
+      alert("Please fill the necessary Information!");
       return;
     }
-
+    const userId =
+      userInfo.length < 1 ? 0 : userInfo[userInfo.length - 1].id + 1;
     let userInformation = {
       name: name,
       email: email,
-      passWord: passWord,
+      password: password,
+      id: userId,
     };
 
     const newUserInfo = [...userInfo, userInformation];
     localStorage.setItem("userInfo", JSON.stringify(newUserInfo));
-
+    setUserInfo(newUserInfo);
     setEmail("");
     setName("");
-    setPassWord("");
+    setpassword("");
+    alert(`Welcome ${name}`);
     navigate("/products");
-    console.log("btn is clicked");
   };
 
   return (
@@ -54,12 +63,12 @@ export const SignUp = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label className="password">Password:</label>
+          <label className="password">password:</label>
           <input
             type="text"
             placeholder="****"
-            value={passWord}
-            onChange={(e) => setPassWord(e.target.value)}
+            value={password}
+            onChange={(e) => setpassword(e.target.value)}
           />
           <input type="submit" value="Submit" className="submit-input" />
 

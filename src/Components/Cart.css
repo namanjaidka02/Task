@@ -45,10 +45,22 @@ button:hover {
   box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.2);
 }
 
+.back-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 6%;
+}
+
 @media only screen and (min-width: 390px) and (max-width: 600px) {
   .cart-items-container {
     display: flex;
     flex-direction: column;
     width: 90%;
+  }
+  .back-btn {
+    width: 11%;
+    right: 3rem;
+    position: fixed;
   }
 }

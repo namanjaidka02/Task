@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Product.css";
 
 export const Products = () => {
   const navigate = useNavigate();
+
   const [selectedShoes, setSelectedShoes] = useState([]);
   const shoes = [
     {
@@ -50,6 +51,13 @@ export const Products = () => {
     },
   ];
 
+  useEffect(() => {
+    const storedShoes = localStorage.getItem("savedShoe");
+    if (storedShoes) {
+      setSelectedShoes(JSON.parse(storedShoes));
+    }
+  }, []);
+
   const handleClick = (shoe) => {
     const addedShoes = {
       id: shoe.id,
@@ -61,6 +69,8 @@ export const Products = () => {
     const savedShoes = [...selectedShoes, addedShoes];
     localStorage.setItem("savedShoe", JSON.stringify(savedShoes));
     setSelectedShoes(savedShoes);
+
+    alert("Shoe Added");
   };
 
   const onClick = () => {
@@ -76,6 +86,7 @@ export const Products = () => {
             <img src={shoe.image} alt={shoe.name} />
             <p>{shoe.name}</p>
             <p>₹{shoe.price}</p>
+
             <button onClick={() => handleClick(shoe)}>Add to cart</button>
           </ul>
         ))}

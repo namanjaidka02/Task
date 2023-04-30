@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Cart.css";
+import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
   const [allShoes, setAllShoes] = useState([]);
@@ -16,6 +17,11 @@ export const Cart = () => {
     });
     localStorage.setItem("savedShoe", JSON.stringify(updateShoes));
     setAllShoes(updateShoes);
+    alert("Shoe Removed");
+  };
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/products");
   };
 
   return (
@@ -30,6 +36,9 @@ export const Cart = () => {
             <button onClick={() => handleDelete(shoe)}>Remove</button>
           </ul>
         ))}
+        <button onClick={handleClick} className="back-btn">
+          Back
+        </button>
       </div>
     </div>
   );

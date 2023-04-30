@@ -79,3 +79,18 @@ h3 {
   padding-top: 1rem;
   font-size: 1.5rem;
 }
+
+@media only screen and (min-width: 390px) and (max-width: 600px) {
+  form {
+    margin-top: 12rem;
+    width: 80%;
+    font-size: larger;
+  }
+  .form {
+    padding-top: 5.8rem;
+  }
+
+  .login-form {
+    font-size: 1.4rem;
+  }
+}

@@ -59,5 +59,7 @@ button:hover {
   }
   .cart {
     width: 11%;
+    right: 3rem;
+    position: fixed;
   }
 }
