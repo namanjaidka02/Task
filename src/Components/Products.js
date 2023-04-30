@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Product.css";
 
 export const Products = () => {
-  const [selectedShoes, setSelectedShoes] = useState("");
   const navigate = useNavigate();
-
+  const [selectedShoes, setSelectedShoes] = useState([]);
   const shoes = [
     {
       id: "1",
@@ -52,25 +51,37 @@ export const Products = () => {
   ];
 
   const handleClick = (shoe) => {
-    localStorage.setItem("savedShoe", JSON.stringify(shoe));
+    const addedShoes = {
+      id: shoe.id,
+      name: shoe.name,
+      price: shoe.price,
+      image: shoe.image,
+    };
+
+    const savedShoes = [...selectedShoes, addedShoes];
+    localStorage.setItem("savedShoe", JSON.stringify(savedShoes));
+    setSelectedShoes(savedShoes);
+  };
+
+  const onClick = () => {
     navigate("/cart");
   };
+
   return (
     <div className="products-container">
       <h1>Shoes</h1>
       <div className="img-container">
         {shoes.map((shoe) => (
           <ul className="img-item" key={shoe.id}>
-            <img
-              src={shoe.image}
-              alt={shoe.name}
-              onClick={() => setSelectedShoes(shoe.id)}
-            />
+            <img src={shoe.image} alt={shoe.name} />
             <p>{shoe.name}</p>
             <p>₹{shoe.price}</p>
             <button onClick={() => handleClick(shoe)}>Add to cart</button>
           </ul>
         ))}
+        <button onClick={onClick} className="cart ">
+          See Cart
+        </button>
       </div>
     </div>
   );
